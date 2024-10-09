@@ -1,5 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import {
+    ChangeDetectorRef,
     Directive,
     EventEmitter,
     HostListener,
@@ -110,6 +111,8 @@ export class NgxMaskDirective implements ControlValueAccessor, OnChanges, Valida
 
     /**For IME composition event */
     private _isComposing = false;
+
+    private readonly cdr = inject(ChangeDetectorRef);
 
     private readonly document = inject(DOCUMENT);
 
@@ -1001,6 +1004,8 @@ export class NgxMaskDirective implements ControlValueAccessor, OnChanges, Valida
                 typeof controlValue
             );
         }
+
+        this.cdr.markForCheck();
     }
 
     public registerOnChange(fn: typeof this.onChange): void {
